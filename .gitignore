@@ -1,0 +1,24 @@
+# Exclude household-level intermediate data
+04_Robustness/timing_shift_contributing_households.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+
+# Private research logs and analysis outputs
+*.log
+*.csv
+*.txt
+*.png
+*.pdf
+*.tex
+*.parquet
+*.out
