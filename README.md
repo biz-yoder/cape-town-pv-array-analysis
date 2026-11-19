@@ -95,14 +95,14 @@ Important reproducibility considerations:
 - Input datasets are not included in this repository.
 - Several scripts reference data stored in project-specific directories on the original research computing environment. File paths may need to be updated before execution elsewhere.
 - Python package dependencies should be installed and configured for the individual scripts.
-- Execution logs and selected intermediate analytical outputs are included where available.
+- Execution logs and analytical outputs are not included in this repository.
 - Household-level intermediate data are excluded from the public repository.
 
 The scripts are organized by analytical stage rather than as a single automated execution pipeline. Consult the individual scripts and the data-preparation README for specific input and output requirements.
 
 ## Outputs
 
-Selected analytical outputs are included alongside the scripts that generate them, including:
+The scripts generate analytical outputs that are not included in this repository, including:
 
 - Regression estimates and summary tables.
 - Event-study estimates and figures.
