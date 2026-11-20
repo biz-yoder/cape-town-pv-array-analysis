@@ -99,7 +99,7 @@ Important reproducibility considerations:
 - The complete pipeline has not been rerun to verify numerical equivalence with the historical results.
 - Some stages intentionally use historical intermediate datasets; see `01_DataPreparation/README.md`.
 - Python package dependencies should be installed and configured for the individual scripts.
-- Execution logs and analytical outputs are not included in this repository.
+- Confidential datasets and generated analytical outputs are not included in this repository.
 - Household-level intermediate data are excluded from the public repository.
 
 The scripts are organized by analytical stage rather than as a single automated execution pipeline. Consult the individual scripts and the data-preparation README for specific input and output requirements.
