@@ -7,32 +7,22 @@ import numpy as np
 # CONFIG
 ###############################################################################
 
-INPUT_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "7_out_09132026/combined_merged_loadshed_time.parquet"
-)
+import sys
+from pathlib import Path
 
-OUTPUT_DIR = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5"
-)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-PREPAID_FILE = os.path.join(
-    OUTPUT_DIR,
-    "prepaid_cleaned_vector_noagg.parquet",
-)
+from paths import STEP7_PANEL, PREPAID_PANEL, POSTPAID_PANEL
 
-POSTPAID_FILE = os.path.join(
-    OUTPUT_DIR,
-    "postpaid_cleaned_vector_noagg.parquet",
-)
+INPUT_FILE = str(STEP7_PANEL)
+OUTPUT_DIR = str(PREPAID_PANEL.parent)
+
+PREPAID_FILE = str(PREPAID_PANEL)
+POSTPAID_FILE = str(POSTPAID_PANEL)
 
 MAX_CONTRACTS_PER_PV_BUILDING = 5
 
-os.makedirs(
-    OUTPUT_DIR,
-    exist_ok=True,
-)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
 ###############################################################################
