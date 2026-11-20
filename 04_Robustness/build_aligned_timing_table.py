@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import TIMING_SENSITIVITY_DIR
+
 #!/usr/bin/env python3
 """Common-calendar PV timing sensitivity table from existing event-study CSV."""
 from pathlib import Path
@@ -5,7 +10,7 @@ import argparse
 import numpy as np
 import pandas as pd
 
-DEFAULT = Path('/shared/gaia-homes/ey53/vscode-server-backup/CapeTown_Workflow/10_Plots_10272026_timing_shift_sensitivity/event_study_all_timing_shifts.csv')
+DEFAULT = TIMING_SENSITIVITY_DIR / "event_study_all_timing_shifts.csv"
 SHIFTS = [-6, -3, 0, 3, 6]
 GROUPS = {0:'<1 kW',1:'1--2 kW',2:'2--3 kW',3:'3--5 kW',4:'>5 kW'}
 

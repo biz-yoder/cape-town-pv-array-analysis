@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import LOAD_SHEDDING_BLOCK_PANEL, LOAD_SHEDDING_SCHEDULE, STEP7_PANEL
+
 import os
 import re
 import time
@@ -13,20 +18,11 @@ import pandas as pd
 # PATHS
 ###############################################################################
 
-LOADSHED_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "Loadshedding_schedule.csv"
-)
+LOADSHED_FILE = str(LOAD_SHEDDING_SCHEDULE)
 
-PANEL_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "6_out_09132026/merged_with_blocks_combined.parquet"
-)
+PANEL_FILE = str(LOAD_SHEDDING_BLOCK_PANEL)
 
-OUTPUT_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "7_out_09132026/combined_merged_loadshed_time.parquet"
-)
+OUTPUT_FILE = str(STEP7_PANEL)
 
 os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 

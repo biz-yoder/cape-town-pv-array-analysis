@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import CONTRACT_LOCATION_MERGE, HISTORICAL_CONTRACT_LOCATIONS, POSTPAID_MONTHLY, PREPAID_MONTHLY
 #Match contracts with locations data
 
 import pandas as pd
@@ -6,10 +11,10 @@ import os
 import polars as pl
 
 # Paths
-locations_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/2a_out_04192026/new_location_total.parquet"
-prepaid_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/1_out_07292026/final_monthly_prepaid_07292026.parquet"
-postpaid_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/1_out_07292026/final_monthly_postpaid_07292026.parquet"
-output_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/2b_out_04192026/out_contract_with_location.parquet"
+locations_path = str(HISTORICAL_CONTRACT_LOCATIONS)
+prepaid_path = str(PREPAID_MONTHLY)
+postpaid_path = str(POSTPAID_MONTHLY)
+output_path = str(CONTRACT_LOCATION_MERGE)
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
 #######################################

@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import MONTHLY_DIR, RAW_PREPAID_DIR
 import polars as pl
 import os
 from time import time
@@ -52,20 +57,20 @@ ALL_COLUMNS = list(SCHEMA_CASTS.keys()) + [
 # -----------------------------
 # Paths
 # -----------------------------
-parquet_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/Prepaid_parquet"
-output_dir = "/home/ey53/vscode-server-backup/CapeTown_Workflow/1_out_07292026"
+parquet_path = str(RAW_PREPAID_DIR)
+output_dir = str(MONTHLY_DIR)
 os.makedirs(output_dir, exist_ok=True)
 ############################################
 
 use_columns = ["totalunits", "trfname", "transaction_timestamp", "contract_account_hashed"]
-final_file = os.path.join(output_dir, "final_monthly_prepaid_07292026.parquet")
+final_file = os.path.join(output_dir, "final_monthly_prepaid.parquet")
 
 # -----------------------------
 # Parameters
 # -----------------------------
 batch_size = 10_000  # number of accounts per batch
 
-parquet_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/Prepaid_parquet"
+parquet_path = str(RAW_PREPAID_DIR)
 files = glob(os.path.join(parquet_path, "**/*.parquet"), recursive=True)
 
 # -----------------------------

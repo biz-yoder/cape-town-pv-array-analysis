@@ -23,3 +23,7 @@ venv/
 *.parquet
 *.out
 !requirements.txt
+
+# Local research datasets and generated results
+/data/
+/outputs/

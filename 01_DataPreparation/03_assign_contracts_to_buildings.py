@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import CONTRACT_BUILDINGS, HISTORICAL_CONTRACT_LOCATION_MERGE, RAW_BUILDINGS
 # Merges contract location data with building data from overture maps
 
 from shapely import wkt
@@ -7,9 +12,9 @@ import os
 
 
 # Paths
-merged_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/2b_out_08032026/out_contract_with_location.parquet"
-buildings_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/capetown_buildings2.parquet"
-output_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/3_out_08032026/out_contractlocation_with_building.parquet"
+merged_path = str(HISTORICAL_CONTRACT_LOCATION_MERGE)
+buildings_path = str(RAW_BUILDINGS)
+output_path = str(CONTRACT_BUILDINGS)
 
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 

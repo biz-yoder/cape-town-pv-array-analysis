@@ -1,6 +1,10 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import POSTPAID_PANEL, PREPAID_PANEL, REGRESSION_DIR
+
 import pandas as pd
 import numpy as np
-from pathlib import Path
 from dataclasses import dataclass
 from linearmodels.panel.data import PanelData
 from scipy import stats
@@ -11,18 +15,15 @@ from scipy import stats
 ###############################################################################
 
 PREPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet"
+    str(PREPAID_PANEL)
 )
 
 POSTPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 
 OUTPUT_DIRECTORY = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "9_out_09132026"
+    REGRESSION_DIR
 )
 
 END_DATE = pd.Timestamp("2023-05-31")

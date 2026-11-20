@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import CONTRACT_BUILDINGS, SHS_BUILDINGS_DIR, SHS_MATCHED_DIR
+
 import time
 from pathlib import Path
 
@@ -16,18 +21,15 @@ import pandas as pd
 ###############################################################################
 
 BUILD_SHS_DIR = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "4_out_08042026"
+    str(SHS_BUILDINGS_DIR)
 )
 
 CONTRACT_BUILD_FILE = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "3_out_08032026/out_contractlocation_with_building.parquet"
+    str(CONTRACT_BUILDINGS)
 )
 
 OUTPUT_DIR = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5a_out_08042026"
+    str(SHS_MATCHED_DIR)
 )
 
 YEARS = [2018, 2019, 2020, 2021, 2022, 2023]

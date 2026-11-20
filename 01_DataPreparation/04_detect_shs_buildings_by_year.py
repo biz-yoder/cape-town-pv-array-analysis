@@ -7,17 +7,8 @@
 
 # # Paths
 # CSV_PATHS = {
-#     # 2020: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023/2020/output_stage_4/prediction_merged_2023.csv",
-#     2018: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2018/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2018_final.csv",
-#     2019: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2019/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2019_final.csv",
-#     2020: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2020/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2020_final.csv",
-#     2021: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2021/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2021_final.csv",
-#     2022: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2022/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2022_final.csv",
-#     2023: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2023/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2023_final.csv"
 # }
 
-# BUILDINGS_PATH = "/home/ey53/vscode-server-backup/CapeTown_Workflow/capetown_buildings2.parquet"
-# OUTPUT_DIR = "/home/ey53/vscode-server-backup/CapeTown_Workflow/4_out_05272026"
 # os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # # Set up
@@ -286,6 +277,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import PV_DETECTION_DIR, RAW_BUILDINGS, SHS_BUILDINGS_DIR
+
 import ast
 import gc
 import os
@@ -303,16 +299,16 @@ import pandas as pd
 ###############################################################################
 
 CSV_PATHS = {
-    2018: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2018/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2018_final.csv",
-    2019: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2019/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2019_final.csv",
-    2020: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2020/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2020_final.csv",
-    2021: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2021/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2021_final.csv",
-    2022: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2022/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2022_final.csv",
-    2023: "/shared/data/climateplus2025/Postprocessing_EntireDataset_CapeTown_Image_2018_2023_Mask2Former_1024_Nov29/2023/output_post_processing_polygonization_grouping_drop_small_objects/prediction_merged_2023_final.csv",
+    2018: str(PV_DETECTION_DIR / "2018" / "prediction_merged_2018_final.csv"),
+    2019: str(PV_DETECTION_DIR / "2019" / "prediction_merged_2019_final.csv"),
+    2020: str(PV_DETECTION_DIR / "2020" / "prediction_merged_2020_final.csv"),
+    2021: str(PV_DETECTION_DIR / "2021" / "prediction_merged_2021_final.csv"),
+    2022: str(PV_DETECTION_DIR / "2022" / "prediction_merged_2022_final.csv"),
+    2023: str(PV_DETECTION_DIR / "2023" / "prediction_merged_2023_final.csv"),
 }
 
-BUILDINGS_PATH = "/home/ey53/vscode-server-backup/CapeTown_Workflow/capetown_buildings2.parquet"
-OUTPUT_DIR = Path("/home/ey53/vscode-server-backup/CapeTown_Workflow/4_out_08042026")
+BUILDINGS_PATH = str(RAW_BUILDINGS)
+OUTPUT_DIR = Path(str(SHS_BUILDINGS_DIR))
 
 CHUNK_SIZE = 50_000
 MIN_PV_AREA_M2 = 1.7

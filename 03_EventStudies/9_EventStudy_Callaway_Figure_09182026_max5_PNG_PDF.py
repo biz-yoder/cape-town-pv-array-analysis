@@ -1,28 +1,31 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import EVENT_STUDY_DIR
 
 ###############################################################################
 # PATHS
 ###############################################################################
 
 PLOT_DIR = (
-    "/shared/gaia-homes/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "10_Plots_09182026"
+    EVENT_STUDY_DIR
 )
 
 ESTIMATES_FILE = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_estimates_09182026_max5.csv",
+    "callaway_dose_response_estimates.csv",
 )
 
 OUTPUT_PNG = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_five_panels_09182026_max5.png",
+    "callaway_dose_response_five_panels.png",
 )
 OUTPUT_PDF = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_five_panels_09182026_max5.pdf",
+    "callaway_dose_response_five_panels.pdf",
 )
 
 ###############################################################################

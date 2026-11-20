@@ -13,6 +13,11 @@
 #      time -1 is the omitted/reference period.
 
 from __future__ import annotations
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import EVENT_STUDY_DIR, POSTPAID_PANEL, PREPAID_PANEL
+
 
 import os
 
@@ -30,18 +35,15 @@ from scipy import sparse, optimize
 ###############################################################################
 
 PREPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet"
+    str(PREPAID_PANEL)
 )
 
 POSTPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 
 PLOT_DIR = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "10_Plots_09182026"
+    EVENT_STUDY_DIR
 )
 
 END_DATE = pd.Timestamp("2023-12-31")
@@ -64,17 +66,17 @@ MODEL_CHUNK_SIZE = 500_000
 # automatically be skipped.
 BOOTSTRAP_CHECKPOINT_DIR = os.path.join(
     PLOT_DIR,
-    "bootstrap_checkpoints_09182026_max5",
+    "bootstrap_checkpoints",
 )
 
 BOOTSTRAP_DRAWS_FILE = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_bootstrap_09182026_max5.parquet",
+    "callaway_dose_response_bootstrap.parquet",
 )
 
 EQUIVALENCE_OUTPUT_FILE = os.path.join(
     PLOT_DIR,
-    "pretrend_equivalence_max_09182026_max5.csv",
+    "pretrend_equivalence_max.csv",
 )
 
 EQUIVALENCE_ALPHA = 0.05
@@ -2443,7 +2445,7 @@ if not equivalence_df.empty:
 
     equivalence_plot = os.path.join(
         PLOT_DIR,
-        "pretrend_equivalence_max_09182026_max5.png",
+        "pretrend_equivalence_max.png",
     )
 
     fig.savefig(
@@ -2471,7 +2473,7 @@ section("SAVING EVENT-STUDY ESTIMATES")
 
 event_output = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_estimates_09182026_max5.csv",
+    "callaway_dose_response_estimates.csv",
 )
 
 event_att.to_csv(
@@ -2570,7 +2572,7 @@ fig.tight_layout()
 
 plot1 = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_lines_09182026_max5.png",
+    "callaway_dose_response_lines.png",
 )
 
 fig.savefig(
@@ -2709,7 +2711,7 @@ fig.tight_layout()
 
 plot2 = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_points_09182026_max5.png",
+    "callaway_dose_response_points.png",
 )
 
 fig.savefig(

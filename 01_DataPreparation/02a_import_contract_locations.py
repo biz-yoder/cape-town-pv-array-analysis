@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import CONTRACT_LOCATIONS, RAW_CONTRACT_LOCATIONS
 # Import and combine contract location data
 
 import os
@@ -6,8 +11,9 @@ from datetime import datetime
 
 
 # Paths
-location_folder = "/home/ey53/vscode-server-backup/CapeTown_Workflow/ContractLocations"
-output_path = "/home/ey53/vscode-server-backup/CapeTown_Workflow/2a_out/new_location_total.parquet"
+location_folder = str(RAW_CONTRACT_LOCATIONS)
+output_path = str(CONTRACT_LOCATIONS)
+Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
 #######################################
 # Import location files

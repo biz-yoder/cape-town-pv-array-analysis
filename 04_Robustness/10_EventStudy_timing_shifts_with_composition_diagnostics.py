@@ -12,6 +12,11 @@
 #   8. Preserves pre-treatment event-study estimates relative to g-1; event
 #      time -1 is the omitted/reference period.
 from __future__ import annotations
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import POSTPAID_PANEL, PREPAID_PANEL, TIMING_SENSITIVITY_DIR
+
 import os
 import matplotlib
 matplotlib.use("Agg")
@@ -23,16 +28,13 @@ from scipy import sparse, optimize
 # PATHS / PARAMETERS
 ###############################################################################
 PREPAID_FILE = (
-    "/shared/gaia-homes/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet"
+    str(PREPAID_PANEL)
 )
 POSTPAID_FILE = (
-    "/shared/gaia-homes/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 PLOT_DIR = (
-    "/shared/gaia-homes/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "10_Plots_10272026_timing_shift_sensitivity"
+    TIMING_SENSITIVITY_DIR
 )
 END_DATE = pd.Timestamp("2023-12-31")
 TREATMENT_CUTOFF = pd.Period("2018-06", freq="M")
@@ -51,15 +53,15 @@ MODEL_CHUNK_SIZE = 500_000
 # automatically be skipped.
 BOOTSTRAP_CHECKPOINT_DIR = os.path.join(
     PLOT_DIR,
-    "bootstrap_checkpoints_09182026_max5",
+    "bootstrap_checkpoints",
 )
 BOOTSTRAP_DRAWS_FILE = os.path.join(
     PLOT_DIR,
-    "callaway_dose_response_bootstrap_09182026_max5.parquet",
+    "callaway_dose_response_bootstrap.parquet",
 )
 EQUIVALENCE_OUTPUT_FILE = os.path.join(
     PLOT_DIR,
-    "pretrend_equivalence_max_09182026_max5.csv",
+    "pretrend_equivalence_max.csv",
 )
 EQUIVALENCE_ALPHA = 0.05
 # Cheap Gaussian simulation performed AFTER the expensive household bootstrap.

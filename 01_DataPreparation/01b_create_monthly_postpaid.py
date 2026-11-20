@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import MONTHLY_DIR, RAW_POSTPAID_PANEL
 # Imports all old prepaid transactions (before April 2021) and postpaid data.
 # Transforms all transactions into monthly panel data
 
@@ -6,10 +11,10 @@ import os
 from time import time
 
 # Paths
-parquet_file = "/home/ey53/vscode-server-backup/CapeTown_Workflow/1_out_04192026/postpaid_2018_2025.parquet"
-output_dir = "/home/ey53/vscode-server-backup/CapeTown_Workflow/1_out_07292026"
+parquet_file = str(RAW_POSTPAID_PANEL)
+output_dir = str(MONTHLY_DIR)
 os.makedirs(output_dir, exist_ok=True)
-final_file = os.path.join(output_dir, "final_monthly_postpaid_07292026.parquet")
+final_file = os.path.join(output_dir, "final_monthly_postpaid.parquet")
 
 # # Columns to use
 # use_columns = ["totalunits", "month_year", "contract_account_hashed", "contract_hashed", "Type", "rate_category"]

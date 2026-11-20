@@ -1,6 +1,10 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import POSTPAID_PANEL, PREPAID_PANEL, REVENUE_DIR, REVENUE_REGISTRATION_PANEL
+
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 
 ###############################################################################
@@ -8,19 +12,16 @@ from pathlib import Path
 ###############################################################################
 
 PREPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet"
+    str(PREPAID_PANEL)
 )
 
 POSTPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 
 
 REGISTRATION_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5c_out_08052026/with_sseg_reg.parquet"
+    str(REVENUE_REGISTRATION_PANEL)
 )
 
 # Residential AMI charges, VAT inclusive, consistent with the tariff values
@@ -36,8 +37,7 @@ AMI_FEE_RAND_PER_MONTH = {
 HIGH_AMI_FEE_ALL_YEAR = 96.20
 
 OUTPUT_DIR = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "10_Revenue_09072026_FBEpreferred"
+    REVENUE_DIR
 )
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

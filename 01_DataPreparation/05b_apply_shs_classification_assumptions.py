@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import SHS_CLASSIFIED_PANEL, SHS_MATCHED_DIR
 # Cleans SHS predictions based on constructed assumptions
 
 import pandas as pd
@@ -6,8 +11,8 @@ import os
 import numpy as np
 
 # Paths
-parquet_dir = "/home/ey53/vscode-server-backup/CapeTown_Workflow/5a_out_08042026"
-parquet_out = "/home/ey53/vscode-server-backup/CapeTown_Workflow/5b_out_08052026"
+parquet_dir = str(SHS_MATCHED_DIR)
+parquet_out = str(SHS_CLASSIFIED_PANEL.parent)
 
 os.makedirs(parquet_out, exist_ok=True)
 
@@ -322,8 +327,6 @@ print(audit)
 # # ==============================
 # # PATHS
 # # ==============================
-# parquet_dir = "/home/ey53/vscode-server-backup/CapeTown_Workflow/5a_out_build"
-# parquet_out = "/home/ey53/vscode-server-backup/CapeTown_Workflow/5b_out"
 # os.makedirs(parquet_out, exist_ok=True)
 
 # # ==============================

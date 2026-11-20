@@ -93,7 +93,11 @@ The analysis relies on municipal electricity consumption and tariff records, con
 Important reproducibility considerations:
 
 - Input datasets are not included in this repository.
-- Several scripts reference data stored in project-specific directories on the original research computing environment. File paths may need to be updated before execution elsewhere.
+- File paths are centralized in `paths.py`. Set `CAPETOWN_DATA_ROOT` to the directory containing private research data.
+- By default, inputs are stored under `data/raw/`, intermediate datasets under `data/processed/`, and analytical outputs under `outputs/`.
+- The confidential datasets needed to run the analysis are not included.
+- The complete pipeline has not been rerun to verify numerical equivalence with the historical results.
+- Some stages intentionally use historical intermediate datasets; see `01_DataPreparation/README.md`.
 - Python package dependencies should be installed and configured for the individual scripts.
 - Execution logs and analytical outputs are not included in this repository.
 - Household-level intermediate data are excluded from the public repository.

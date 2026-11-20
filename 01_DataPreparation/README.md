@@ -27,6 +27,56 @@ the files were archived.
 
 ---
 
+
+## Current Path Configuration
+
+The current scripts use centralized paths defined in the repository-root
+`paths.py`. Historical filenames and execution records below are retained
+for provenance and do not necessarily describe the current output paths.
+
+Set the optional environment variable:
+
+    export CAPETOWN_DATA_ROOT=/path/to/private/capetown-data
+
+By default, `CAPETOWN_DATA_ROOT` is the repository's `data/` directory.
+The following paths are relative to that data root.
+
+| Step | Current output |
+|---|---|
+| 01a | `processed/01_monthly_consumption/final_monthly_prepaid.parquet` |
+| 01b | `processed/01_monthly_consumption/final_monthly_postpaid.parquet` |
+| 02a | `processed/02_contract_locations/new_location_total.parquet` |
+| 02b | `processed/02_contract_location_merge/out_contract_with_location.parquet` |
+| 03 | `processed/03_contract_buildings/out_contractlocation_with_building.parquet` |
+| 04 | `processed/04_shs_buildings/shs_building_{year}.parquet` |
+| 05a | `processed/05_shs_matched/merged_contract_SHS_{year}.parquet` |
+| 05b | `processed/05_shs_classification/combined.parquet` |
+| 05c | `processed/05_shs_registration/with_sseg_reg.parquet` |
+| 06 | `processed/06_load_shedding_blocks/merged_with_blocks.parquet` |
+| 07a | `processed/07_monthly_load_shedding/monthly_consumption_with_outages.parquet` |
+| 08 | `processed/08_final_analysis_panels/prepaid_analysis_panel.parquet` and `postpaid_analysis_panel.parquet` |
+
+External inputs belong under `raw/`, including prepaid transactions,
+postpaid consumption, contract locations, building footprints,
+registration records, and load-shedding data.
+
+Annual PV detection files are expected at
+`raw/pv_detections/{year}/prediction_merged_{year}_final.csv`
+for 2018 through 2023.
+
+Two historical intermediate datasets are required:
+
+- `raw/historical_contract_locations.parquet` (Step 02b).
+- `raw/historical_contract_location_merge.parquet` (Step 03).
+
+These are intentionally distinct from the outputs of Steps 02a and
+02b, respectively. Their numerical equivalence has not been verified.
+
+The historical QA statistics below describe original execution runs.
+The complete standardized pipeline has not been rerun.
+
+---
+
 ## 1. Pipeline Structure
 
 ### Step 1: Construct Monthly Electricity Consumption Panels
@@ -391,9 +441,9 @@ reproducing the pipeline.
    not imply that every upstream input is included in
    this directory.
 
-7. **Paths:** The archived scripts retain their original
-   absolute paths. Reproduction on another system requires
-   updating input and output paths.
+7. **Paths:** Current scripts use centralized paths in
+   `paths.py`. Historical paths below document original
+   execution provenance rather than current configuration.
 
 8. **Archive filenames:** Script filenames have been
    standardized for readability. Original data-generation

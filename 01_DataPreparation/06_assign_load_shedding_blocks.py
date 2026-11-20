@@ -9,9 +9,6 @@
 # # ------------------------------
 # # CONFIG
 # # ------------------------------
-# COMBINED_FILE = "/home/ey53/vscode-server-backup/CapeTown_Workflow/5c_out_04192026/with_sseg_reg.parquet"
-# BLOCKS_FILE = "/home/ey53/vscode-server-backup/CapeTown_Workflow/Load_shedding_Blocks.geojson"
-# OUTPUT_FILE = "/home/ey53/vscode-server-backup/CapeTown_Workflow/6_out_04192026/merged_with_blocks_combined.parquet"
 
 # os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 # CHUNK_SIZE = 100_000
@@ -142,6 +139,11 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import LOAD_SHEDDING_BLOCKS, LOAD_SHEDDING_BLOCK_PANEL, SHS_REGISTRATION_PANEL
+
 import os
 import time
 
@@ -153,20 +155,11 @@ import pandas as pd
 # PATHS
 ###############################################################################
 
-COMBINED_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5c_out_09132026/with_sseg_reg.parquet"
-)
+COMBINED_FILE = str(SHS_REGISTRATION_PANEL)
 
-BLOCKS_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "Load_shedding_Blocks.geojson"
-)
+BLOCKS_FILE = str(LOAD_SHEDDING_BLOCKS)
 
-OUTPUT_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "6_out_09132026/merged_with_blocks_combined.parquet"
-)
+OUTPUT_FILE = str(LOAD_SHEDDING_BLOCK_PANEL)
 
 os.makedirs(
     os.path.dirname(OUTPUT_FILE),

@@ -1,8 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import POSTPAID_PANEL, PREPAID_PANEL, REGRESSION_DIR
+
 import pandas as pd
 from linearmodels.panel import PanelOLS
 import numpy as np
 from scipy.stats import norm
-from pathlib import Path
 
 
 ###########################################################################
@@ -10,13 +14,11 @@ from pathlib import Path
 ###########################################################################
 
 POSTPAID_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 
 OUTPUT_DIRECTORY = Path(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "9_out_09182026"
+    REGRESSION_DIR
 )
 
 END_DATE = pd.Timestamp("2023-05-31")

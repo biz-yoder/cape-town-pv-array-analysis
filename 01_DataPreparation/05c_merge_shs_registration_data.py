@@ -1,3 +1,8 @@
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import REGISTRATION_RECORDS, SHS_CLASSIFIED_PANEL, SHS_REGISTRATION_PANEL
 import os
 
 import numpy as np
@@ -8,20 +13,11 @@ import pandas as pd
 # PATHS AND PARAMETERS
 ###############################################################################
 
-PANEL_PATH = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5b_out_08052026/combined.parquet"
-)
+PANEL_PATH = str(SHS_CLASSIFIED_PANEL)
 
-REGISTER_PATH = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5b_out_04192026/registered.parquet"
-)
+REGISTER_PATH = str(REGISTRATION_RECORDS)
 
-OUTPUT_FILE = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "5c_out_09132026/with_sseg_reg.parquet"
-)
+OUTPUT_FILE = str(SHS_REGISTRATION_PANEL)
 
 PANEL_YEARS = list(range(2018, 2024))
 

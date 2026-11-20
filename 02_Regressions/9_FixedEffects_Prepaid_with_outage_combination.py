@@ -1,16 +1,19 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import POSTPAID_PANEL, PREPAID_PANEL, REGRESSION_DIR
+
 import pandas as pd
 from linearmodels.panel import PanelOLS
 import numpy as np
 from scipy.stats import norm
 
 prepaid = pd.read_parquet(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet"
+    str(PREPAID_PANEL)
 )
 
 postpaid = pd.read_parquet(
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet"
+    str(POSTPAID_PANEL)
 )
 
 # Stack prepaid and postpaid observations
@@ -685,10 +688,9 @@ outage_effects_output = pd.DataFrame(
     outage_effect_rows
 )
 
-outage_effects_file = (
-    "/home/ey53/vscode-server-backup/CapeTown_Workflow/"
-    "9_out_09182026/"
-    "prepaid_tariff_specific_outage_effects_09182026.csv"
+REGRESSION_DIR.mkdir(parents=True, exist_ok=True)
+outage_effects_file = str(
+    REGRESSION_DIR / "prepaid_tariff_specific_outage_effects.csv"
 )
 
 outage_effects_output.to_csv(
