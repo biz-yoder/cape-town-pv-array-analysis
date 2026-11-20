@@ -88,7 +88,7 @@ Processes prepaid electricity transaction Parquet files from
 household-level observations.
 
 Output:
-- `1_out_07292026/final_monthly_prepaid_07292026.parquet`
+- `processed/01_monthly_consumption/final_monthly_prepaid.parquet`
 
 Execution record:
 - `01a_create_monthly_prepaid_20260731.log`
@@ -106,12 +106,12 @@ Notes:
 **01b_create_monthly_postpaid.py**
 
 Processes the postpaid transaction panel from
-`1_out_04192026/postpaid_2018_2025.parquet`.
+`raw/postpaid_2018_2025.parquet`.
 
 Transactions are aggregated by contract and month.
 
 Output:
-- `1_out_07292026/final_monthly_postpaid_07292026.parquet`
+- `processed/01_monthly_consumption/final_monthly_postpaid.parquet`
 
 Verification:
 - 6,714,889 rows.
@@ -129,7 +129,7 @@ Execution record:
 **02a_import_contract_locations.py**
 
 Imports electricity contract location CSV files from
-`ContractLocations/`.
+`raw/ContractLocations/`.
 
 Records are filtered to `business_area == "TSES"`.
 
@@ -138,7 +138,7 @@ and move-out dates, activity status, geographic coordinates
 (WKT), ward, suburb, electricity region, and related fields.
 
 Output:
-- `2a_out_04192026/new_location_total.parquet`
+- `processed/02_contract_locations/new_location_total.parquet`
 
 Dataset verification:
 - 1,574,644 rows.
@@ -146,8 +146,8 @@ Dataset verification:
 
 Execution record:
 - No execution log located.
-- The available script specifies a different output directory
-  (`2a_out/`) from the dataset consumed by Step 2b.
+- The current Step 02a output is distinct from the historical
+  contract-location dataset consumed by Step 02b.
 - The script and dataset structure are consistent, but the
   exact generating execution has not been independently verified.
 
@@ -157,12 +157,12 @@ Combines prepaid and postpaid monthly consumption records
 with contract location information.
 
 Inputs:
-- `1_out_07292026/final_monthly_prepaid_07292026.parquet`
-- `1_out_07292026/final_monthly_postpaid_07292026.parquet`
-- `2a_out_04192026/new_location_total.parquet`
+- `processed/01_monthly_consumption/final_monthly_prepaid.parquet`
+- `processed/01_monthly_consumption/final_monthly_postpaid.parquet`
+- `raw/historical_contract_locations.parquet`
 
 Output:
-- `2b_out_08032026/out_contract_with_location.parquet`
+- `processed/02_contract_location_merge/out_contract_with_location.parquet`
 
 Execution record:
 - `02b_merge_contracts_with_locations_20260801.log`
@@ -173,9 +173,9 @@ Reported QA:
 - No remaining duplicate household-month observations.
 - 97.2% of rows have location information.
 
-The execution log records an April output directory, whereas
-the August 3 dataset consumed by Step 3 is stored in
-`2b_out_08032026/`.
+The historical execution log records an April output directory,
+whereas Step 03 consumes a separate August 3 intermediate dataset,
+now configured as `raw/historical_contract_location_merge.parquet`.
 
 The August dataset has the same row count as the execution
 log, but its exact content equivalence to the original
@@ -189,11 +189,11 @@ Spatially matches contract locations to building footprints
 using the contract-location dataset and building polygons.
 
 Inputs:
-- `2b_out_08032026/out_contract_with_location.parquet`
-- `capetown_buildings2.parquet`
+- `raw/historical_contract_location_merge.parquet`
+- `raw/capetown_buildings2.parquet`
 
 Output:
-- `3_out_08032026/out_contractlocation_with_building.parquet`
+- `processed/03_contract_buildings/out_contractlocation_with_building.parquet`
 
 Execution record:
 - `03_assign_contracts_to_buildings_20260803.log`
@@ -216,8 +216,8 @@ Matches annual Mask2Former rooftop PV detections to
 building footprints.
 
 Inputs:
-- Annual 2018–2023 Mask2Former prediction CSV files.
-- `capetown_buildings2.parquet`
+- Annual Mask2Former prediction CSV files at `raw/pv_detections/{year}/prediction_merged_{year}_final.csv` for 2018–2023.
+- `raw/capetown_buildings2.parquet`
 
 Processing parameters:
 - Chunk size: 50,000.
@@ -227,12 +227,12 @@ Processing parameters:
 - Metric CRS: EPSG:32734.
 
 Outputs:
-- `4_out_08042026/shs_building_2018.parquet`
-- `4_out_08042026/shs_building_2019.parquet`
-- `4_out_08042026/shs_building_2020.parquet`
-- `4_out_08042026/shs_building_2021.parquet`
-- `4_out_08042026/shs_building_2022.parquet`
-- `4_out_08042026/shs_building_2023.parquet`
+- `processed/04_shs_buildings/shs_building_2018.parquet`
+- `processed/04_shs_buildings/shs_building_2019.parquet`
+- `processed/04_shs_buildings/shs_building_2020.parquet`
+- `processed/04_shs_buildings/shs_building_2021.parquet`
+- `processed/04_shs_buildings/shs_building_2022.parquet`
+- `processed/04_shs_buildings/shs_building_2023.parquet`
 
 Execution record:
 - `04_detect_shs_buildings_by_year_20260804.log`
@@ -253,11 +253,11 @@ Matches contract-building observations to annual rooftop
 SHS building detections.
 
 Inputs:
-- `3_out_08032026/out_contractlocation_with_building.parquet`
+- `processed/03_contract_buildings/out_contractlocation_with_building.parquet`
 - Annual SHS building detections from Step 4.
 
 Outputs:
-- Annual contract-SHS merged datasets in `5a_out_08042026/`.
+- Annual contract-SHS merged datasets in `processed/05_shs_matched/`.
 
 Execution record:
 - `05a_match_contracts_to_shs_buildings_20260805.log`
@@ -276,7 +276,7 @@ Input:
 - Annual contract-SHS datasets from Step 5a.
 
 Output:
-- `5b_out_08052026/combined.parquet`
+- `processed/05_shs_classification/combined.parquet`
 
 Execution record:
 - `05b_apply_shs_classification_assumptions_20260805.log`
@@ -287,11 +287,11 @@ Combines the contract-month panel with official SSEG
 registration information.
 
 Inputs:
-- `5b_out_08052026/combined.parquet`
-- `5b_out_04192026/registered.parquet`
+- `processed/05_shs_classification/combined.parquet`
+- `raw/registered.parquet`
 
 Output:
-- `5c_out_09132026/with_sseg_reg.parquet`
+- `processed/05_shs_registration/with_sseg_reg.parquet`
 
 Execution record:
 - `05c_merge_shs_registration_data_20260913.log`
@@ -310,11 +310,11 @@ Assigns geographic load-shedding blocks to contract
 locations using the load-shedding block boundaries.
 
 Inputs:
-- `5c_out_09132026/with_sseg_reg.parquet`
-- `Load_shedding_Blocks.geojson`
+- `processed/05_shs_registration/with_sseg_reg.parquet`
+- `raw/Load_shedding_Blocks.geojson`
 
 Output:
-- `6_out_09132026/merged_with_blocks_combined.parquet`
+- `processed/06_load_shedding_blocks/merged_with_blocks.parquet`
 
 Execution record:
 - `06_assign_load_shedding_blocks_20260913.log`
@@ -334,11 +334,11 @@ Calculates monthly load-shedding duration measures and
 merges them into the household-month electricity panel.
 
 Inputs:
-- `6_out_09132026/merged_with_blocks_combined.parquet`
-- `Loadshedding_schedule.csv`
+- `processed/06_load_shedding_blocks/merged_with_blocks.parquet`
+- `raw/Loadshedding_schedule.csv`
 
 Output:
-- `7_out_09132026/combined_merged_loadshed_time.parquet`
+- `processed/07_monthly_load_shedding/monthly_consumption_with_outages.parquet`
 
 Execution record:
 - `07a_calculate_monthly_load_shedding_20260913.log`
@@ -363,11 +363,11 @@ associated with buildings having no more than five contracts:
 `max_contracts_building_panel <= 5`.
 
 Inputs:
-- `7_out_09132026/combined_merged_loadshed_time.parquet`
+- `processed/07_monthly_load_shedding/monthly_consumption_with_outages.parquet`
 
 Outputs:
-- `8_out_09132026_max5/prepaid_cleaned_vector_noagg.parquet`
-- `8_out_09132026_max5/postpaid_cleaned_vector_noagg.parquet`
+- `processed/08_final_analysis_panels/prepaid_analysis_panel.parquet`
+- `processed/08_final_analysis_panels/postpaid_analysis_panel.parquet`
 
 Execution record:
 - `08_build_final_analysis_panels_20260913.log`
